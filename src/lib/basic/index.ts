@@ -1,8 +1,7 @@
-import { Core } from '@youwol/platform-essentials'
+import { Installer } from '@youwol/os-core'
+export * from './asset-specific'
 
-export async function install(
-    installer: Core.Installer,
-): Promise<Core.Installer> {
+export async function install(installer: Installer): Promise<Installer> {
     return installer.with({
         fromManifests: [
             {
