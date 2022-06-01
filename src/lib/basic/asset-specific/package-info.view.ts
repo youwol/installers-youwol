@@ -1,7 +1,6 @@
 import { child$, VirtualDOM } from '@youwol/flux-view'
 import {
     AssetsGateway,
-    AssetsBackend,
     CdnBackend,
     raiseHTTPErrors,
     onHTTPErrors,
@@ -19,8 +18,8 @@ import {
 import { getUrlBase } from '@youwol/cdn-client'
 import { Select } from '@youwol/fv-input'
 import { ExplorerView } from './package-explorer.view'
+import { AssetLightDescription } from '@youwol/os-core'
 
-type Asset = AssetsBackend.GetAssetResponse
 type MetadataResponse = CdnBackend.GetLibraryInfoResponse
 
 export class PackageVersionSelect implements VirtualDOM {
@@ -102,7 +101,7 @@ interface Link {
 export class PackageInfoState {
     static nativeExplorerId = 'native-explorer'
 
-    public readonly asset: Asset
+    public readonly asset: AssetLightDescription
     public readonly metadata$: Observable<MetadataResponse>
     public readonly selectedVersion$ = new BehaviorSubject<string>(undefined)
     public readonly links$: Observable<Link[]>
@@ -111,7 +110,7 @@ export class PackageInfoState {
     )
     public readonly client = new AssetsGateway.Client().cdn
 
-    constructor(params: { asset: Asset }) {
+    constructor(params: { asset: AssetLightDescription }) {
         Object.assign(this, params)
 
         this.metadata$ = this.client
@@ -211,10 +210,10 @@ export class PackageInfoView {
     static ClassSelector = 'package-info-view'
     public readonly class = `${PackageInfoView.ClassSelector} d-flex flex-column p-2 h-100`
     public readonly children: VirtualDOM[]
-    public readonly asset: Asset
+    public readonly asset: AssetLightDescription
     public readonly state: PackageInfoState
 
-    constructor(params: { asset: Asset }) {
+    constructor(params: { asset: AssetLightDescription }) {
         Object.assign(this, params)
         this.state = new PackageInfoState({ asset: this.asset })
 

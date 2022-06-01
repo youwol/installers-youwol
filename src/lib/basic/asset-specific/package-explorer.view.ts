@@ -1,7 +1,6 @@
 import { BehaviorSubject, Observable } from 'rxjs'
 import {
     AssetsGateway,
-    AssetsBackend,
     CdnBackend,
     raiseHTTPErrors,
 } from '@youwol/http-clients'
@@ -9,19 +8,17 @@ import { mergeMap, share } from 'rxjs/operators'
 
 import { child$, VirtualDOM } from '@youwol/flux-view'
 import { getUrlBase } from '@youwol/cdn-client'
+import { AssetLightDescription } from '@youwol/os-core'
 
 export class ExplorerState {
-    public readonly asset: AssetsBackend.GetAssetResponse
+    public readonly asset: AssetLightDescription
     public readonly version: string
     public readonly items$: Observable<CdnBackend.QueryExplorerResponse>
     public readonly selectedFolder$ = new BehaviorSubject<string>('')
 
     public readonly client = new AssetsGateway.Client().cdn
 
-    constructor(params: {
-        asset: AssetsBackend.GetAssetResponse
-        version: string
-    }) {
+    constructor(params: { asset: AssetLightDescription; version: string }) {
         Object.assign(this, params)
 
         this.items$ = this.selectedFolder$.pipe(
@@ -113,10 +110,7 @@ export class ExplorerView {
     public readonly state: ExplorerState
     public readonly children: VirtualDOM[]
 
-    constructor(params: {
-        asset: AssetsBackend.GetAssetResponse
-        version: string
-    }) {
+    constructor(params: { asset: AssetLightDescription; version: string }) {
         Object.assign(this, params)
         this.state = new ExplorerState(params)
 
