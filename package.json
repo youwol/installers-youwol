@@ -1,6 +1,6 @@
 {
     "name": "@youwol/installers-youwol",
-    "version": "0.0.1-wip",
+    "version": "0.0.1",
     "description": "Collections of 'standards' installers for youwol",
     "author": "greinisch@youwol.com",
     "keywords": [
