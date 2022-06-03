@@ -3,6 +3,7 @@ import { ExplorerBackend } from '@youwol/http-clients'
 import { uploadFile$ } from './asset-specific/upload-data'
 import { AssetLightDescription } from '@youwol/os-core/src/lib/environment'
 import { PackageInfoView } from './asset-specific'
+import { FileInfoView } from './asset-specific/file-info.view'
 export * from './asset-specific'
 export * from './desktop'
 
@@ -34,6 +35,16 @@ export async function install(installer: Installer): Promise<Installer> {
                             },
                             applicable: () => {
                                 return asset.kind == 'package'
+                            },
+                        },
+                        {
+                            icon: 'fas fa-info',
+                            name: 'File info',
+                            exe: () => {
+                                return new FileInfoView({ asset, permissions })
+                            },
+                            applicable: () => {
+                                return asset.kind == 'data'
                             },
                         },
                     ]
