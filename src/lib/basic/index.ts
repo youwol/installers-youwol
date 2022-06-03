@@ -1,7 +1,6 @@
 import { Installer } from '@youwol/os-core'
-import { ExplorerBackend } from '@youwol/http-clients'
+import { AssetsBackend, ExplorerBackend } from '@youwol/http-clients'
 import { uploadFile$ } from './asset-specific/upload-data'
-import { AssetLightDescription } from '@youwol/os-core/src/lib/environment'
 import { PackageInfoView } from './asset-specific'
 import { FileInfoView } from './asset-specific/file-info.view'
 export * from './asset-specific'
@@ -23,8 +22,10 @@ export async function install(installer: Installer): Promise<Installer> {
                 ),
                 assetPreviews: ({
                     asset,
+                    permissions,
                 }: {
-                    asset: AssetLightDescription
+                    asset: AssetsBackend.GetAssetResponse
+                    permissions: AssetsBackend.GetPermissionsResponse
                 }) => {
                     return [
                         {
@@ -53,8 +54,8 @@ export async function install(installer: Installer): Promise<Installer> {
                     return [
                         {
                             name: 'Import data',
-                            icon: 'fas fa-file-import',
-                            authorized: true,
+                            icon: { class: 'fas fa-file-import' },
+                            enabled: () => true,
                             exe: async () => {
                                 const input = document.createElement('input')
                                 input.setAttribute('type', 'file')
