@@ -30,12 +30,12 @@ export class PackageVersionSelect implements VirtualDOM {
 
     constructor(params: { state: PackageInfoState }) {
         Object.assign(this, params)
-        let itemsData$ = this.state.metadata$.pipe(
+        const itemsData$ = this.state.metadata$.pipe(
             map((metadata) => {
                 return metadata.versions.map((v) => new Select.ItemData(v, v))
             }),
         )
-        let selectState = new Select.State(
+        const selectState = new Select.State(
             itemsData$,
             this.state.selectedVersion$,
         )
@@ -57,12 +57,15 @@ export class PackageLinkSelect {
 
     constructor(params: { state: PackageInfoState }) {
         Object.assign(this, params)
-        let itemsData$ = this.state.links$.pipe(
+        const itemsData$ = this.state.links$.pipe(
             map((links) => {
                 return links.map((l) => new Select.ItemData(l.url, l.name))
             }),
         )
-        let selectState = new Select.State(itemsData$, this.state.selectedLink$)
+        const selectState = new Select.State(
+            itemsData$,
+            this.state.selectedLink$,
+        )
         this.children = [
             {
                 innerText: 'Reports:',
