@@ -34,7 +34,7 @@ const externals = {
 export const setup = {
     name:'@youwol/installers-youwol',
     assetId:'QHlvdXdvbC9pbnN0YWxsZXJzLXlvdXdvbA==',
-    version:'0.1.0',
+    version:'0.1.1',
     shortDescription:"Collections of standards installers for youwol",
     developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/installers-youwol',
     npmPackage:'https://www.npmjs.com/package/@youwol/installers-youwol',
