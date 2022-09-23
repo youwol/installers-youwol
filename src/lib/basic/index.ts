@@ -1,4 +1,4 @@
-import { Installer } from '@youwol/os-core'
+import { Installer, ExplorerState } from '@youwol/os-core'
 import { AssetsBackend, ExplorerBackend } from '@youwol/http-clients'
 import { uploadFile$ } from './asset-specific/upload-data'
 import { PackageInfoView } from './asset-specific'
@@ -50,7 +50,15 @@ export async function install(installer: Installer): Promise<Installer> {
                         },
                     ]
                 },
-                contextMenuActions: ({ node, explorer }) => {
+                contextMenuActions: ({
+                    node,
+                    explorer,
+                }: {
+                    node:
+                        | ExplorerBackend.GetItemResponse
+                        | ExplorerBackend.GetFolderResponse
+                    explorer: ExplorerState
+                }) => {
                     return [
                         {
                             name: 'Import data',
