@@ -60,9 +60,9 @@
         ]
     },
     "dependencies": {
-        "@youwol/installers-stories": "^0.1.1",
-        "@youwol/installers-flux": "^0.1.1",
-        "@youwol/os-core": "^0.1.1",
+        "@youwol/installers-stories": "^0.1.2",
+        "@youwol/installers-flux": "^0.1.2",
+        "@youwol/os-core": "^0.1.2",
         "@youwol/http-clients": "^1.0.2",
         "rxjs": "^6.5.5",
         "@youwol/flux-view": "^1.0.3",
@@ -71,9 +71,9 @@
     },
     "youwol": {
         "cdnDependencies": {
-            "@youwol/installers-stories": "^0.1.1",
-            "@youwol/installers-flux": "^0.1.1",
-            "@youwol/os-core": "^0.1.1",
+            "@youwol/installers-stories": "^0.1.2",
+            "@youwol/installers-flux": "^0.1.2",
+            "@youwol/os-core": "^0.1.2",
             "@youwol/http-clients": "^1.0.2",
             "rxjs": "^6.5.5",
             "@youwol/flux-view": "^1.0.3",

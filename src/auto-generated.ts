@@ -1,17 +1,16 @@
 
 const runTimeDependencies = {
-    "load": {
-        "@youwol/installers-stories": "^0.1.1",
-        "@youwol/installers-flux": "^0.1.1",
-        "@youwol/os-core": "^0.1.1",
+    "externals": {
+        "@youwol/installers-stories": "^0.1.2",
+        "@youwol/installers-flux": "^0.1.2",
+        "@youwol/os-core": "^0.1.2",
         "@youwol/http-clients": "^1.0.2",
         "rxjs": "^6.5.5",
         "@youwol/flux-view": "^1.0.3",
         "@youwol/cdn-client": "^1.0.2",
         "@youwol/fv-input": "^0.2.1"
     },
-    "differed": {},
-    "includedInBundle": []
+    "includedInBundle": {}
 }
 const externals = {
     "@youwol/installers-stories": {
@@ -97,10 +96,32 @@ const exportedSymbols = {
         "exportedSymbol": "@youwol/fv-input"
     }
 }
+
+// eslint-disable-next-line @typescript-eslint/ban-types -- allow to allow no secondary entries
+const mainEntry : Object = {
+    "entryFile": "./lib/index.ts",
+    "loadDependencies": [
+        "@youwol/installers-stories",
+        "@youwol/installers-flux",
+        "@youwol/os-core",
+        "@youwol/http-clients",
+        "rxjs",
+        "@youwol/flux-view",
+        "@youwol/cdn-client",
+        "@youwol/fv-input"
+    ]
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types -- allow to allow no secondary entries
+const secondaryEntries : Object = {}
+const entries = {
+     '@youwol/installers-youwol': './lib/index.ts',
+    ...Object.values(secondaryEntries).reduce( (acc,e) => ({...acc, [`@youwol/installers-youwol/${e.name}`]:e.entryFile}), {})
+}
 export const setup = {
     name:'@youwol/installers-youwol',
         assetId:'QHlvdXdvbC9pbnN0YWxsZXJzLXlvdXdvbA==',
-    version:'0.1.2',
+    version:'0.1.3-wip',
     shortDescription:"Collections of standards installers for youwol",
     developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/installers-youwol',
     npmPackage:'https://www.npmjs.com/package/@youwol/installers-youwol',
@@ -110,7 +131,46 @@ export const setup = {
     runTimeDependencies,
     externals,
     exportedSymbols,
+    entries,
     getDependencySymbolExported: (module:string) => {
         return `${exportedSymbols[module].exportedSymbol}_APIv${exportedSymbols[module].apiKey}`
+    },
+
+    installMainModule: ({cdnClient, installParameters}:{cdnClient, installParameters?}) => {
+        const parameters = installParameters || {}
+        const scripts = parameters.scripts || []
+        const modules = [
+            ...(parameters.modules || []),
+            ...mainEntry['loadDependencies'].map( d => `${d}#${runTimeDependencies.externals[d]}`)
+        ]
+        return cdnClient.install({
+            ...parameters,
+            modules,
+            scripts,
+        }).then(() => {
+            return window[`@youwol/installers-youwol_APIv01`]
+        })
+    },
+    installAuxiliaryModule: ({name, cdnClient, installParameters}:{name: string, cdnClient, installParameters?}) => {
+        const entry = secondaryEntries[name]
+        const parameters = installParameters || {}
+        const scripts = [
+            ...(parameters.scripts || []),
+            `@youwol/installers-youwol#0.1.3-wip~dist/@youwol/installers-youwol/${entry.name}.js`
+        ]
+        const modules = [
+            ...(parameters.modules || []),
+            ...entry.loadDependencies.map( d => `${d}#${runTimeDependencies.externals[d]}`)
+        ]
+        if(!entry){
+            throw Error(`Can not find the secondary entry '${name}'. Referenced in template.py?`)
+        }
+        return cdnClient.install({
+            ...parameters,
+            modules,
+            scripts,
+        }).then(() => {
+            return window[`@youwol/installers-youwol/${entry.name}_APIv01`]
+        })
     }
 }
