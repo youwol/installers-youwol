@@ -3,12 +3,11 @@ from pathlib import Path
 
 from youwol.pipelines.pipeline_typescript_weback_npm import Template, PackageType, Dependencies, \
     RunTimeDeps, generate_template, Bundles, MainModule
-from youwol_utils import parse_json
+from youwol.utils import parse_json
 
 folder_path = Path(__file__).parent
 
 pkg_json = parse_json(folder_path / 'package.json')
-
 
 template = Template(
     path=folder_path,
@@ -28,6 +27,8 @@ template = Template(
                 "@youwol/flux-view": "^1.0.3",
                 "@youwol/cdn-client": "^1.0.2",
                 "@youwol/fv-input": "^0.2.1",
+                '@youwol/fv-group': '^0.2.1',
+
             }
         ),
         devTime={
@@ -41,7 +42,8 @@ template = Template(
             entryFile='./lib/index.ts',
             loadDependencies=["@youwol/installers-stories", "@youwol/installers-flux", "@youwol/os-core",
                               "@youwol/http-clients", "rxjs", "@youwol/flux-view", "@youwol/cdn-client",
-                              "@youwol/fv-input"
+                              "@youwol/fv-input", '@youwol/fv-group'
+
                               ]
         )
     ),
@@ -60,5 +62,3 @@ for file in ['README.md', '.gitignore', '.npmignore', '.prettierignore', 'LICENS
         src=folder_path / '.template' / file,
         dst=folder_path / file
     )
-
-

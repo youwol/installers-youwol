@@ -9,7 +9,7 @@ This library is part of the hybrid cloud/local ecosystem
 
 [Online user-guide](https://l.youwol.com/doc/@youwol/installers-youwol)
 
-[Developers documentation](https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/installers-youwol)
+[Developers documentation](https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/installers-youwol&tab=doc)
 
 [Package on npm](https://www.npmjs.com/package/@youwol/installers-youwol)
 
