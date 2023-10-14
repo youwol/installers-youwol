@@ -197,6 +197,7 @@ const basedActionsStyle = {
     marginTop: '3px',
 }
 
+const iconsClasses = 'fas  fa-xs yw-hover-text-orange fv-pointer'
 class SideAppRunAction implements VirtualDOM {
     public readonly class = basedActionsClass
 
@@ -210,7 +211,7 @@ class SideAppRunAction implements VirtualDOM {
         Object.assign(this, params)
         this.children = [
             {
-                class: 'fas fa-play fa-xs yw-hover-text-orange',
+                class: `fa-play ${iconsClasses}`,
                 customAttributes: {
                     dataToggle: 'tooltip',
                     title: 'Run',
@@ -241,7 +242,7 @@ class SideAppInfoAction implements VirtualDOM {
         Object.assign(this, params)
         this.children = [
             {
-                class: 'fas fa-info fa-xs yw-hover-text-orange',
+                class: `fa-info ${iconsClasses}`,
                 customAttributes: {
                     dataToggle: 'tooltip',
                     title: 'More information',
@@ -272,7 +273,7 @@ class SideAppRemoveAction implements VirtualDOM {
         Object.assign(this, params)
         this.children = [
             {
-                class: 'fas fa-times-circle fa-xs yw-hover-text-orange',
+                class: `fa-times-circle ${iconsClasses}`,
                 customAttributes: {
                     dataToggle: 'tooltip',
                     title: 'Remove from desktop',
